@@ -1,8 +1,10 @@
 package com.kangdonghun.app;
 
+import com.kangdonghun.app.entity.Person;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.kangdonghun.app.repository.PersonRepository;
 
 @SpringBootApplication
 public class AppApplication implements CommandLineRunner {
