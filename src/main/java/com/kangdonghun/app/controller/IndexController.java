@@ -1,52 +1,42 @@
 package com.kangdonghun.app.controller;
 
-import com.kangdonghun.app.entity.Person;
-import com.kangdonghun.app.entity.SocialMedia;
-import com.kangdonghun.app.entity.Work;
-import com.kangdonghun.app.entity.Skill;
-import com.kangdonghun.app.entity.Interests;
+import com.kangdonghun.app.entity.*;
 import com.kangdonghun.app.repository.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
 public class IndexController {
 
-    private PersonRepository personRepository;
-    private SocialMediaRepository socialMediaRepository;
-    private InterestsRepository interestsRepository;
-    private SkillRepository skillRepository;
-    private WorkRepository workRepository;
+    private final PersonRepository personRepository;
+    private final SocialMediaRepository socialMediaRepository;
+    private final InterestsRepository interestsRepository;
+    private final SkillRepository skillRepository;
+    private final WorkRepository workRepository;
 
-    public IndexController(PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
-    public IndexController(SocialMediaRepository socialMediaRepository){ this.socialMediaRepository=socialMediaRepository; }
-    public IndexController(InterestsRepository interestsRepository){
+    public IndexController(PersonRepository personRepository, SocialMediaRepository socialMediaRepository,InterestsRepository interestsRepository,SkillRepository skillRepository, WorkRepository workRepository){
+        this.personRepository=personRepository;
+        this.socialMediaRepository=socialMediaRepository;
         this.interestsRepository=interestsRepository;
+        this.skillRepository=skillRepository;
+        this.workRepository=workRepository;
     }
-    public IndexController(SkillRepository skillRepository){this.skillRepository=skillRepository;}
-    public IndexController(WorkRepository workRepository){this.workRepository=workRepository;}
 
     @GetMapping("/")
+
     public String index(Model model) {
-        Person person = personRepository.findAll().stream().findFirst().orElse(null);
-        model.addAttribute("person", person);
-
-        SocialMedia socialMedia = socialMediaRepository.findAll().stream().findFirst().orElse(null);
-        model.addAttribute("socialMedia", socialMedia);
-
-        List<Interests> interests = interestsRepository.findAll();
-        model.addAttribute("interests", interests);
-
+        Person person=personRepository.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("person",person);
+        SocialMedia socialMedia=socialMediaRepository.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("socialMedia",socialMedia);
+        Interests interests=interestsRepository.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("interests",interests);
         List<Skill> skills = skillRepository.findAll();
         model.addAttribute("skills", skills);
-
         List<Work> works = workRepository.findAll();
         model.addAttribute("works", works);
         return "resume";
     }
-
 }

@@ -1,5 +1,4 @@
 package com.kangdonghun.app;
-
 import com.kangdonghun.app.entity.*;
 import com.kangdonghun.app.repository.*;
 import org.springframework.boot.CommandLineRunner;
@@ -9,37 +8,30 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class AppApplication implements CommandLineRunner {
 
-	private PersonRepository personRepository;
-	private SocialMediaRepository socialMediaRepository;
-	private InterestsRepository interestsRepository;
-	private SkillRepository skillRepository;
-	private WorkRepository workRepository;
+	private final PersonRepository personRepository;
+	private final SocialMediaRepository socialMediaRepository;
+	private final InterestsRepository interestsRepository;
+	private final SkillRepository skillRepository;
+	private final WorkRepository workRepository;
 
-	public AppApplication(PersonRepository personRepository) {
-		this.personRepository = personRepository;
-	}
-	public AppApplication(InterestsRepository interestsRepository){
-		this.interestsRepository=interestsRepository;
-	}
-	public AppApplication(SocialMediaRepository socialMediaRepository){
+	public AppApplication(PersonRepository personRepository, SocialMediaRepository socialMediaRepository,InterestsRepository interestsRepository,SkillRepository skillRepository,WorkRepository workRepository){
+		this.personRepository=personRepository;
 		this.socialMediaRepository=socialMediaRepository;
-	}
-	public AppApplication(SkillRepository skillRepository){
+		this.interestsRepository=interestsRepository;
 		this.skillRepository=skillRepository;
-	}
-	public AppApplication(WorkRepository workRepository) {
 		this.workRepository=workRepository;
 	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(AppApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		personRepository.save(new Person("강동훈", "데이터 분석", "hello@test.com", "010-1234-5678"));
-		socialMediaRepository.save(new SocialMedia("anonymous","anonymous"));
-		interestsRepository.save(new Interests("컴퓨터"));
-		//skillRepository.save(new Skill("English"));
-		workRepository.save(new Work("web","kakao","8","??"));
+		personRepository.save(new Person("강동훈","웹프로그래밍","hello@test.com","010-1234-5678"));
+		socialMediaRepository.save(new SocialMedia("https://www.github.com/anonymous","https://www.twitter.com/anonymous"));
+		interestsRepository.save(new Interests("독서,컴퓨터"));
+		skillRepository.save(new Skill("Skill",80));
+		workRepository.save(new Work("position","company","time","desc"));
 	}
 }
